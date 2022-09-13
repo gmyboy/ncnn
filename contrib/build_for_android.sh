@@ -49,5 +49,5 @@ for ABI in ${ABI_LIST[@]}; do
         -DNCNN_VULKAN=${NCNN_VULKAN} ..
     cmake --build . --parallel 8
     cmake --build . --target install
-    echo -e "${Green}--> ${ABI} installed ${NC}"
+    echo -e "${Green}--> ${ABI} done ${NC}"
 done
