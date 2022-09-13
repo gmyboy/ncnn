@@ -18,8 +18,8 @@ cd build
 echo -e "${Blue}--> start compile${NC}"
 ANDROID_NDK=${ANDROID_HOME}/ndk/25.1.8937393
 ANDROID_CMAKE=${ANDROID_HOME}/cmake/3.22.1
-# support abi list on windows x64: armeabi-v7a,arm64-v8a,x86_64
-ANDROID_ABI="armeabi-v7a,arm64-v8a,x86_64"
+# support abi list on windows x64: armeabi-v7a,arm64-v8a,x86,x86_64
+ANDROID_ABI="armeabi-v7a,arm64-v8a,x86,x86_64"
 
 NCNN_VULKAN=OFF
 ANDROID_PLATFORM=android-21
@@ -36,8 +36,13 @@ echo -e "${Green}ANDROID_PLATFORM = ${ANDROID_PLATFORM}${NC}"
 ABI_LIST=(${ANDROID_ABI//,/ })
 for ABI in ${ABI_LIST[@]}; do
     echo -e "${Blue}--> ${ABI}...${NC}"
+
+    BUILD_DIR=build-android-${ABI}
+    mkdir -p ${BUILD_DIR}
+    pushd ${BUILD_DIR}
+
     cmake -G "Unix Makefiles" \
-        -DCMAKE_INSTALL_PREFIX=$(pwd)/install/${ABI} \
+        -DCMAKE_INSTALL_PREFIX=install/${ABI} \
         -DCMAKE_BUILD_TYPE=Release \
         -DCMAKE_TOOLCHAIN_FILE=${ANDROID_NDK}/build/cmake/android.toolchain.cmake \
         -DCMAKE_MAKE_PROGRAM="${ANDROID_NDK}/prebuilt/windows-x86_64/bin/make.exe" \
@@ -46,8 +51,10 @@ for ABI in ${ABI_LIST[@]}; do
         -DANDROID_PLATFORM=${ANDROID_PLATFORM} \
         -DANDROID_ARM_NEON=ON \
         -DANDROID_STL=c++_shared \
-        -DNCNN_VULKAN=${NCNN_VULKAN} ..
+        -DNCNN_VULKAN=${NCNN_VULKAN} ../../
     cmake --build . --parallel 8
     cmake --build . --target install
+
+    popd
     echo -e "${Green}--> ${ABI} done ${NC}"
 done
