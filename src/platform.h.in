@@ -31,6 +31,7 @@
 #cmakedefine01 NCNN_VULKAN
 #cmakedefine01 NCNN_SYSTEM_GLSLANG
 #cmakedefine01 NCNN_RUNTIME_CPU
+#cmakedefine01 NCNN_GNU_INLINE_ASM
 #cmakedefine01 NCNN_AVX
 #cmakedefine01 NCNN_XOP
 #cmakedefine01 NCNN_FMA
@@ -55,6 +56,7 @@
 #cmakedefine01 NCNN_ARM86SVEF32MM
 #endif // __aarch64__
 #cmakedefine01 NCNN_MSA
+#cmakedefine01 NCNN_LSX
 #cmakedefine01 NCNN_MMI
 #cmakedefine01 NCNN_RVV
 #cmakedefine01 NCNN_INT8

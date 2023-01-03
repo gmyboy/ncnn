@@ -30,10 +30,11 @@ public:
     virtual int forward(const std::vector<Mat>& bottom_blobs, std::vector<Mat>& top_blobs, const Option& opt) const;
 
 public:
-    Mat weight_data_t;
+    Layer* activation;
 
-    Layer* inner_product;
-    Layer* permute;
+    Mat weight_data_tm;
+
+    Layer* gemm;
 };
 
 } // namespace ncnn
